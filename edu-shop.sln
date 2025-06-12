@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduShop.Client", "EduShop.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduShop.Server", "EduShop.Server\EduShop.Server.csproj", "{500E3A44-243A-4FBD-9B34-96554F33699A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduShop.Shared", "EduShop.Shared\EduShop.Shared.csproj", "{41D24EF4-B7EF-4A37-AC1E-CD3A807B1214}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{500E3A44-243A-4FBD-9B34-96554F33699A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{500E3A44-243A-4FBD-9B34-96554F33699A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{500E3A44-243A-4FBD-9B34-96554F33699A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41D24EF4-B7EF-4A37-AC1E-CD3A807B1214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41D24EF4-B7EF-4A37-AC1E-CD3A807B1214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41D24EF4-B7EF-4A37-AC1E-CD3A807B1214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41D24EF4-B7EF-4A37-AC1E-CD3A807B1214}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
