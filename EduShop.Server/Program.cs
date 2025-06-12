@@ -1,4 +1,5 @@
 var builder = WebApplication.CreateBuilder(args);
+var allowedOrigins = "EduShop.Server";
 
 // Add services to the container.
 
@@ -8,6 +9,14 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(allowedOrigins, policy =>
+    {
+        policy.WithOrigins("https://localhost:7020");
+    });
+});
 
 var app = builder.Build();
 
@@ -20,6 +29,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(allowedOrigins);
 
 app.UseAuthorization();
 
