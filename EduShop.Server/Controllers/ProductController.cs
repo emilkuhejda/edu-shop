@@ -1,38 +1,34 @@
-﻿using EduShop.Shared.Contracts;
+﻿using EduShop.Server.Mappers;
+using EduShop.Server.Persistence;
+using EduShop.Shared.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EduShop.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductController : ControllerBase
+    public class ProductController(DatabaseContext databaseContext) : ControllerBase
     {
         [HttpGet]
         [ProducesResponseType(typeof(ProductDto[]), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult GetAllAsync(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
-            var products = new List<ProductDto>
-            {
-                new()
-                {
-                    Name = "Item 1",
-                    Description = "Description 1",
-                    Price = 10,
-                    Amount = 100,
-                    DateCreated = DateTime.Now
-                },
-                new()
-                {
-                    Name = "Item 2",
-                    Description = "Description 2",
-                    Price = 11,
-                    Amount = 110,
-                    DateCreated = DateTime.Now
-                }
-            };
+            var products = await databaseContext.Products.ToArrayAsync(cancellationToken);
+            return Ok(products.Select(ProductMapper.ToDto));
+        }
 
-            return Ok(products);
+        [HttpPost]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> InsertAsync(ProductDto productDto, CancellationToken cancellationToken)
+        {
+            var product = ProductMapper.ToProduct(productDto);
+            await databaseContext.Products.AddAsync(product, cancellationToken);
+            await databaseContext.SaveChangesAsync(cancellationToken);
+
+            return Ok(ProductMapper.ToDto(product));
         }
     }
 }
