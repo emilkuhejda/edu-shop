@@ -1,4 +1,4 @@
-﻿namespace EduShop.Shared.Contracts
+﻿namespace EduShop.Shared.Dtos
 {
     public record ProductDto
     {

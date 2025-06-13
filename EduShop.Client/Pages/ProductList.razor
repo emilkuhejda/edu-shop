@@ -2,6 +2,11 @@
 
 <h3>Products</h3>
 
+<button @onclick="GoToCreate"
+        class="px-4 py-2 bg-green-500 text-gray-50 font-semibold rounded shadow-md">
+    + Create
+</button>
+
 @if (Products == null)
 {
     <p><em>Loading...</em></p>
@@ -17,18 +22,25 @@ else
                 <th>Amount</th>
                 <th>Date created</th>
                 <th>Date updated</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var product in Products)
             {
                 <tr>
-                    <td>@product.Name</td>
+                    <td><a href="/products/detail/@product.Id">@product.Name</a></td>
                     <td>@product.Description</td>
                     <td>@product.Price</td>
                     <td>@product.Amount</td>
                     <td>@product.DateCreated</td>
                     <td>@product.DateUpdated</td>
+                    <td>
+                        <button @onclick="() => DeleteAsync(product.Id)" 
+                                class="px-2 py-1 bg-red-500 text-gray-50 font-semibold rounded shadow-md">
+                            Remove
+                        </button>
+                    </td>
                 </tr>
             }
         </tbody>

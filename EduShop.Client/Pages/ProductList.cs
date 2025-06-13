@@ -1,5 +1,5 @@
 ﻿using EduShop.Client.Http;
-using EduShop.Shared.Contracts;
+using EduShop.Shared.Dtos;
 using Microsoft.AspNetCore.Components;
 
 namespace EduShop.Client.Pages
@@ -9,14 +9,32 @@ namespace EduShop.Client.Pages
         [Inject]
         private IWebClient WebClient { get; set; } = null!;
 
-        public ICollection<ProductDto>? Products { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; } = null!;
+
+        private ICollection<ProductDto>? Products { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            using var cts = new CancellationTokenSource();
-            Products = await WebClient.GetProductsAsync(cts.Token);
+            await LoadProductsAsync();
 
             await base.OnInitializedAsync();
+        }
+
+        private void GoToCreate()
+        {
+            NavigationManager.NavigateTo("/products/detail");
+        }
+
+        private async Task DeleteAsync(Guid productId)
+        {
+            await WebClient.DeleteProductAsync(productId);
+            await LoadProductsAsync();
+        }
+
+        private async Task LoadProductsAsync()
+        {
+            Products = await WebClient.GetProductsAsync();
         }
     }
 }
