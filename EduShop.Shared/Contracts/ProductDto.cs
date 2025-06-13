@@ -2,6 +2,8 @@
 {
     public record ProductDto
     {
+        public Guid Id { get; init; }
+
         public string Name { get; init; } = string.Empty;
 
         public string Description { get; init; } = string.Empty;
@@ -11,5 +13,7 @@
         public int Amount { get; init; }
 
         public DateTime DateCreated { get; init; }
+
+        public DateTime DateUpdated { get; set; }
     }
 }
