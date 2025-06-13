@@ -1,5 +1,6 @@
 using EduShop.Server.Extensions;
 using EduShop.Server.Persistence;
+using EduShop.Server.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,8 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseInMemoryDat
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddCors(options =>
 {

@@ -13,5 +13,7 @@
         public int Amount { get; init; }
 
         public DateTime DateCreated { get; init; }
+
+        public DateTime DateUpdated { get; set; }
     }
 }

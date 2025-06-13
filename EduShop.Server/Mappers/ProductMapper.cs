@@ -14,7 +14,8 @@ namespace EduShop.Server.Mappers
                 Description = dto.Description,
                 Price = dto.Price,
                 Amount = dto.Amount,
-                DateCreated = dto.DateCreated
+                DateCreated = dto.DateCreated,
+                DateUpdated = dto.DateUpdated
             };
         }
 
@@ -27,7 +28,8 @@ namespace EduShop.Server.Mappers
                 Description = product.Description,
                 Price = product.Price,
                 Amount = product.Amount,
-                DateCreated = product.DateCreated
+                DateCreated = product.DateCreated,
+                DateUpdated = product.DateUpdated
             };
         }
     }

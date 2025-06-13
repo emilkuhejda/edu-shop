@@ -16,16 +16,14 @@ namespace EduShop.Server.Extensions
                     Name = "Item 1",
                     Description = "Description 1",
                     Price = 10,
-                    Amount = 100,
-                    DateCreated = DateTime.Now
+                    Amount = 100
                 },
                 new()
                 {
                     Name = "Item 2",
                     Description = "Description 2",
                     Price = 11,
-                    Amount = 110,
-                    DateCreated = DateTime.Now
+                    Amount = 110
                 }
             };
 
