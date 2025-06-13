@@ -26,12 +26,6 @@ namespace EduShop.Client.Pages
             NavigationManager.NavigateTo("/products/detail");
         }
 
-        private async Task DeleteAsync(Guid productId)
-        {
-            await WebClient.DeleteProductAsync(productId);
-            await LoadProductsAsync();
-        }
-
         private async Task LoadProductsAsync()
         {
             Products = await WebClient.GetProductsAsync();

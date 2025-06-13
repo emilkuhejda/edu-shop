@@ -1,9 +1,9 @@
 ﻿@page "/products/detail/{productId:guid?}"
 
-<h3>Product @Contract.Name</h3>
+<h3>Product</h3>
 
 <div class="p-4 max-w-md bg-gray-100 rounded shadow-md">
-    <EditForm Model="@Contract" OnValidSubmit="Save">
+    @* <EditForm Model="@Contract" OnValidSubmit="Save">
         <DataAnnotationsValidator />
         <ValidationSummary />
 
@@ -35,5 +35,5 @@
                 class="px-4 py-2 bg-blue-500 text-gray-50 font-semibold rounded">
             Save
         </button>
-    </EditForm>
+    </EditForm> *@
 </div>

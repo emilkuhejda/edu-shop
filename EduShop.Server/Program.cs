@@ -1,10 +1,8 @@
 using EduShop.Server.Extensions;
 using EduShop.Server.Persistence;
-using EduShop.Server.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var allowedOrigins = "EduShop.Server";
 
 // Add services to the container.
 
@@ -17,16 +15,6 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseInMemoryDat
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(allowedOrigins, policy =>
-    {
-        policy.WithOrigins("https://localhost:7020").AllowAnyMethod().AllowAnyHeader();
-    });
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,8 +26,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseCors(allowedOrigins);
 
 app.UseAuthorization();
 

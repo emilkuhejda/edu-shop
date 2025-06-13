@@ -21,16 +21,24 @@ namespace EduShop.Client.Extensions
 
         private static async Task<T> SendAsync<T>(this HttpClient httpClient, HttpMethod httpMethod, string path, object? contract) where T : new()
         {
-            using var cts = new CancellationTokenSource();
-            var requestMessage = CreateRequestMessage(httpMethod, CreateUri(httpClient, path), contract != null ? SerializeJsonContent(contract) : null);
-            var response = await httpClient.SendAsync(requestMessage, cts.Token);
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                using var cts = new CancellationTokenSource();
+                var requestMessage = CreateRequestMessage(httpMethod, CreateUri(httpClient, path), contract != null ? SerializeJsonContent(contract) : null);
+                var response = await httpClient.SendAsync(requestMessage, cts.Token);
+                response.EnsureSuccessStatusCode();
 
-            if (typeof(T) == typeof(NoResult))
-                return new T();
+                if (typeof(T) == typeof(NoResult))
+                    return new T();
 
-            var content = await response.Content.ReadAsStringAsync(cts.Token);
-            return JsonConvert.DeserializeObject<T>(content) ?? throw new SerializationException();
+                var content = await response.Content.ReadAsStringAsync(cts.Token);
+                return JsonConvert.DeserializeObject<T>(content) ?? throw new SerializationException();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
         }
 
         private static Uri CreateUri(HttpClient httpClient, string path)
