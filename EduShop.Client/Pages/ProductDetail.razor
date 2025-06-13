@@ -1,0 +1,39 @@
+﻿@page "/products/detail/{productId:guid?}"
+
+<h3>Product @Contract.Name</h3>
+
+<div class="p-4 max-w-md bg-gray-100 rounded shadow-md">
+    <EditForm Model="@Contract" OnValidSubmit="Save">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-4">
+            <label for="name" class="block font-semibold mb-1">Name</label>
+            <InputText id="name" @bind-Value="Contract.Name"
+                       class="w-full p-2 border rounded" />
+        </div>
+        
+        <div class="mb-4">
+            <label for="description" class="block font-semibold mb-1">Description</label>
+            <InputText id="description" @bind-Value="Contract.Description"
+                       class="w-full p-2 border rounded" />
+        </div>
+
+        <div class="mb-4">
+            <label for="price" class="block font-semibold mb-1">Price</label>
+            <InputNumber id="price" @bind-Value="Contract.Price"
+                         class="w-full p-2 border rounded" />
+        </div>
+        
+        <div class="mb-4">
+            <label for="amount" class="block font-semibold mb-1">Amount</label>
+            <InputNumber id="amount" @bind-Value="Contract.Amount"
+                       class="w-full p-2 border rounded" />
+        </div>
+
+        <button type="submit" 
+                class="px-4 py-2 bg-blue-500 text-gray-50 font-semibold rounded">
+            Save
+        </button>
+    </EditForm>
+</div>

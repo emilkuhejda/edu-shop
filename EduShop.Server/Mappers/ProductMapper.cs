@@ -1,21 +1,19 @@
 ﻿using EduShop.Server.Persistence.Models;
 using EduShop.Shared.Contracts;
+using EduShop.Shared.Dtos;
 
 namespace EduShop.Server.Mappers
 {
     internal static class ProductMapper
     {
-        public static Product ToProduct(ProductDto dto)
+        public static Product ToProduct(CreateOrUpdateProductContract contract)
         {
             return new Product
             {
-                Id = dto.Id,
-                Name = dto.Name,
-                Description = dto.Description,
-                Price = dto.Price,
-                Amount = dto.Amount,
-                DateCreated = dto.DateCreated,
-                DateUpdated = dto.DateUpdated
+                Name = contract.Name,
+                Description = contract.Description,
+                Price = contract.Price,
+                Amount = contract.Amount
             };
         }
 
