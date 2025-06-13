@@ -1,13 +1,12 @@
 ﻿using EduShop.Shared.Contracts;
 using EduShop.Shared.Dtos;
-using Newtonsoft.Json;
-using System.Net.Http.Json;
+using EduShop.Client.Extensions;
 
 namespace EduShop.Client.Http
 {
     public interface IWebClient
     {
-        Task<ProductDto[]> GetProductsAsync();
+        Task<ICollection<ProductDto>> GetProductsAsync();
 
         Task<ProductDto> GetProductAsync(Guid productId);
 
@@ -20,50 +19,34 @@ namespace EduShop.Client.Http
 
     internal class WebClient(IHttpClientFactory clientFactory) : IWebClient
     {
-        public async Task<ProductDto[]> GetProductsAsync()
+        public async Task<ICollection<ProductDto>> GetProductsAsync()
         {
-            using var cts = new CancellationTokenSource();
-            var client = clientFactory.CreateClient(nameof(WebClient));
-            var response = await client.GetAsync("product", cts.Token);
-            response.EnsureSuccessStatusCode();
-
-            var content = await response.Content.ReadAsStringAsync(cts.Token);
-            return JsonConvert.DeserializeObject<ProductDto[]>(content) ?? [];
+            return await GetClient().SendGetAsync<List<ProductDto>>("/product");
         }
 
         public async Task<ProductDto> GetProductAsync(Guid productId)
         {
-            using var cts = new CancellationTokenSource();
-            var client = clientFactory.CreateClient(nameof(WebClient));
-            var response = await client.GetAsync($"product/{productId}", cts.Token);
-            response.EnsureSuccessStatusCode();
-
-            var content = await response.Content.ReadAsStringAsync(cts.Token);
-            return JsonConvert.DeserializeObject<ProductDto>(content) ?? new ProductDto();
+            return await GetClient().SendGetAsync<ProductDto>($"/product/{productId}");
         }
 
         public async Task CreateProductAsync(CreateOrUpdateProductContract contract)
         {
-            using var cts = new CancellationTokenSource();
-            var client = clientFactory.CreateClient(nameof(WebClient));
-            var response = await client.PostAsJsonAsync("product", contract, cts.Token);
-            response.EnsureSuccessStatusCode();
+            await GetClient().SendPostAsync("/product", contract);
         }
 
         public async Task UpdateProductAsync(Guid productId, CreateOrUpdateProductContract contract)
         {
-            using var cts = new CancellationTokenSource();
-            var client = clientFactory.CreateClient(nameof(WebClient));
-            var response = await client.PutAsJsonAsync($"product/{productId}", contract, cts.Token);
-            response.EnsureSuccessStatusCode();
+            await GetClient().SendPutAsync($"/product/{productId}", contract);
         }
 
         public async Task DeleteProductAsync(Guid productId)
         {
-            using var cts = new CancellationTokenSource();
-            var client = clientFactory.CreateClient(nameof(WebClient));
-            var response = await client.DeleteAsync($"product/{productId}", cts.Token);
-            response.EnsureSuccessStatusCode();
+            await GetClient().SendDeleteAsync($"/product/{productId}");
+        }
+
+        private HttpClient GetClient()
+        {
+            return clientFactory.CreateClient(nameof(WebClient));
         }
     }
 }
